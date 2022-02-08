@@ -1,0 +1,65 @@
+body{
+    margin: 0px;
+}
+#navbar{
+
+    width:100%;
+    height:62px;
+    display: flex;
+    background-color: #24292f;
+    color: white;
+}
+
+#logo img{
+
+    width: 54%;
+    margin-left:17px;
+    margin-top: 13px;
+    
+}
+
+#profile-img{
+
+width: 50%;
+border-radius: 50%;
+height: 40px;
+margin-top: 10px;
+
+}
+
+#list li{
+
+    display: inline;
+    margin-right: 2%;
+}
+
+#logo{
+
+    width: 5%;
+    text-align: right;
+}
+#options{
+    width: 75%;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+}
+#profile{
+
+    width: 7%;
+}
+a{
+    text-decoration: none;
+    color:white;
+}
+#search-input{
+    margin-top: 17px;;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.637);
+    width:260px;
+    margin-left: 20px;
+    height:25px;
+    border-radius: 5px;
+    color:white;
+}

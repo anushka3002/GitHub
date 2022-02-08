@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="git.css">
+    <style>
+        #header{
+            width:100%;
+            height:71px;
+            position:relative;
+            display: flex;
+            border-bottom: 1px solid rgb(143, 139, 139);
+        }
+        #bigimage{
+            width:100%;
+            height:300px;
+            border-radius: 50%;
+        }
+        #imagebox{
+            width:100%;
+            height:300px;
+        }
+        #profilebox{
+            width:24%;
+            height:600px;
+            margin-left: 30px;
+        }
+        #overview{
+            margin-left: 30%;
+            margin-top: 35px;
+        }
+        #icon{
+            margin-top: 35px;
+            margin-left: 3%;
+        }
+        #headtext{
+            margin-left:5px;
+            margin-top:34px;
+        }
+        #profileimg{
+            border-radius: 50%;
+            /* margin-left: 20px; */
+        }
+        #infogit{
+            margin-bottom: 10%;
+            width:100%;
+            height:50%;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+        }
+        #repo_box{
+            width:65%;
+            height:600px;
+            margin-left: 20px;
+            overflow:scroll;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+        }
+        #dpandrepo{
+            display: flex;
+        }
+        #reposearch{
+            width:100%;
+            height:65px;
+            border-bottom:1px solid rgb(124, 121, 121);
+        }
+        #project{
+            width:100%;
+            height:100px;
+        }
+        button{
+            width:80px;
+            height:40px;
+            border-radius: 5px;
+            border:1px solid rgb(184, 180, 180);
+
+        }
+        #green{
+            background-color: #2da44e;
+            margin-left: 2%;
+            margin-top: 2%;
+        }
+        #rightbtn{
+            margin-left: 40%;
+        }
+        #one{
+            margin-left: 2%;
+        }
+        #two{
+            margin-left: 2%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="main">
+        <div id="header">
+            <img src="https://cdn1.iconfinder.com/data/icons/education-vol-1/48/040-512.png" width="15px" height="15px" id="overview" id="icon">
+            <p id="headtext">Overview</p>
+            <img src="https://cdn3.iconfinder.com/data/icons/books-18/100/closed_pages_bookmark-512.png" width="25px" height="25px" id="icon">
+            <p id="headtext">Repositories</p>
+            <img src="https://cdn.icon-icons.com/icons2/859/PNG/128/project_icon-icons.com_67780.png" width="15px" height="15px" id="icon">
+            <p id="headtext">Projects</p>
+            <img src="https://static.thenounproject.com/png/131477-200.png" width="15px" height="15px" id="icon">
+            <p id="headtext">Packages</p>
+            <img src="https://cdn.icon-icons.com/icons2/37/PNG/128/scheme_star_favorite_3421.png" width="15px" height="15px" id="icon">
+            <p id="headtext">Stars</p>
+        </div>
+    </div>
+        <div id="dpandrepo">
+        <div id="profilebox">
+        <div id="imagebox">
+        <div id="bigimage">
+            <img src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" id="profileimg" width="100%" height="100%">
+        </div>
+    </div>
+    <div id="infogit">
+    </div>
+</div>
+<div id="repo_box">
+    <div id="reposearch">
+    <button id="repo-btn">Get User Repo</button>
+    <button id="rightbtn">Type</button>
+    <button id="one">Language</button>
+    <button id="two">Sort</button>
+    <button id="green">New</button>
+</div>
+<div id="project"></div>
+</div>
+</div>
+</body>
+</html>                                 
+<script type="module">
+    import navbar from "./navbargit.js"
+    import getUser from "./getUser.js"
+    var navbar1=document.querySelector("#container");
+    var response;
+    navbar1.innerHTML=navbar()
+    let input=document.querySelector("#search-input")
+    input.addEventListener('keypress',searchUser)
+
+    let btn=document.getElementById('repo-btn')
+    btn.addEventListener('click',getUserRepo)
+
+
+    
+    async function searchUser(event){
+        document.querySelector("#infogit").innerHTML=""
+        if(event.key==='Enter'){
+        let query=input.value
+        response=await getUser(query)
+        console.log("response:",response)
+        let {avatar_url}=response
+        document.getElementById('profile-img').src=avatar_url
+        document.getElementById('profileimg').src=avatar_url
+        var name=document.createElement("h2");
+        name.innerText=response.name;
+        var login=document.createElement("p");
+        login.innerText=response.login;
+        var bio=document.createElement("p");
+        bio.innerText=response.bio;
+        var location=document.createElement("p");
+        location.innerText=response.location;
+        var twitter=document.createElement("p");
+        document.querySelector("#infogit").append(name,login,bio,location,twitter)
+        }
+    }
+
+    
+    async function getUserRepo(event){
+        document.querySelector("#project").innerHTML=""
+        event.preventDefault()
+        try{
+            let res=await fetch(response.repos_url)
+        let repo_data=await res.json()
+        showrepo(repo_data)
+        console.log('repo_data:',repo_data)
+
+        }
+        catch(error){
+            console.log("error:",error)
+        }
+        
+    }
+
+    function showrepo(repo_data){
+        repo_data.forEach(function(data){
+            var projecthead = document.createElement('a');    ///       
+        projecthead.setAttribute('href',data.html_url);
+        projecthead.setAttribute('target',"_blank");
+        projecthead.innerText = data.name;
+
+
+        projecthead.style.color="#5763ee";
+        projecthead.style.fontSize="20px";
+        projecthead.style.fontWeight="600";
+        projecthead.style.marginTop="20px";
+        var access=document.createElement('p');
+        access.innerText=data.visibility;
+        access.style.border="1px solid #dfd8d9";
+        access.style.marginTop="25px";
+        access.style.marginLeft="6px";
+        access.style.fontSize="12px";
+        access.style.borderRadius="30%";
+        access.style.paddingLeft="3px";
+        access.style.paddingRight="3px";
+        var lineup=document.createElement("div");
+        lineup.style.display="flex"
+        lineup.append(projecthead,access)
+        var desc=document.createElement("p");
+        desc.innerText=data.description;
+        var lang=document.createElement("p");
+        lang.innerText=data.language;
+        document.querySelector("#project").append(lineup,desc,lang)
+        })
+        
+    }
+       
+    
+
+
+    
+    
+</script>
